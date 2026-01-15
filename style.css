@@ -1,0 +1,151 @@
+:root {
+    color-scheme: light dark;
+
+    --bg-primary: #210046;
+    --bg-secondary: #280055;
+
+    --primary-color: #ff0059;
+    --secondary-color: #0077ff;
+}
+
+*,
+*::before,
+*::after {
+    position: relative;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+}
+
+html,
+body {
+    --pad: 1rem;
+
+    user-select: none;
+    background: var(--bg-primary);
+    width: 100vw;
+    height: 100dvh;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+
+
+    & > #grid__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: stretch;
+        width: min(425px, 100%);
+        margin: 0 auto;
+
+
+        & > .modal {
+            --pad: .5rem;
+
+            background: #fff;
+            border-radius: 2rem 2rem 0 0;
+            overflow: hidden;
+            padding: var(--pad);
+            padding-bottom: 0;
+
+
+            & #grid,
+            & #luckyGrid {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: calc(var(--pad) * 2) 0;
+                padding: var(--pad);
+                margin-bottom: var(--pad);
+
+                & .row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+            }
+
+            & #grid {
+
+                & .row {
+
+                    & .number {
+                        --fg: var(--bg-secondary);
+                    }
+
+                    &:last-child {
+                        padding-right: calc(100% - 2rem*11);
+                    }
+                }
+            }
+
+            & #luckyGrid {
+
+                & .row {
+
+                    & .number {
+                        --fg: var(--primary-color);
+                    }
+                }
+            }
+
+            & > .appBar {
+                --pad: .75rem;
+                --size: 5rem;
+
+                display: flex;
+                align-items: stretch;
+                justify-content: space-between;
+                padding: var(--pad);
+                margin-top: var(--pad);
+                background: var(--bg-primary);
+                height: var(--size);
+                border-radius: calc(var(--size) * .5) calc(var(--size) * .5) 0 0;
+                box-shadow: 0 0 1.25rem -.25rem var(--bg-primary);
+
+
+                & button[type="submit"] {
+                    flex-grow: 1;
+                    border-radius: 100vh;
+                    font-size: 1rem;
+                    background: var(--primary-color);
+                    color: #fff;
+                    font-weight: 600;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+.number {
+    --fg: #555;
+    --bg: #eee;
+
+    display: grid;
+    place-items: center;
+    border-radius: 100vh;
+    aspect-ratio: 1 / 1;
+    width: 2rem;
+    height: auto;
+    background: #f0f0f0;
+    box-shadow: 0 0 1rem -.375rem #ccc;
+    color: var(--fg);
+    font-size: .875rem;
+
+    &:is(button) {
+        cursor: pointer;
+    }
+
+    &.selected {
+        background: var(--fg);
+        color: var(--bg);
+    }
+}
