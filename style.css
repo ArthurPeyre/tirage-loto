@@ -1,11 +1,14 @@
 :root {
-    color-scheme: light dark;
-
     --bg-primary: #210046;
-    --bg-secondary: #280055;
+    --bg-secondary: #2f0066;
+    --bg-tertiary: #5900be;
 
     --primary-color: #ff0059;
     --secondary-color: #0077ff;
+    --agree-color: hsl(120, 100%, 40%);
+    --agree-color-disabled: hsl(120, 100%, 25%);
+
+    --num-bg: #f0f0f0;
 }
 
 *,
@@ -25,6 +28,7 @@ body {
 
     user-select: none;
     background: var(--bg-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     width: 100vw;
     height: 100dvh;
 }
@@ -41,19 +45,134 @@ main {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        align-items: stretch;
+        align-items: center;
+        gap: var(--pad);
         width: min(425px, 100%);
         margin: 0 auto;
 
 
+        & > .draw {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: stretch;
+            gap: var(--pad);
+            margin-top: auto;
+
+
+            & .preset {
+                position: absolute;
+                content: '';
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+
+                & > * {
+                    background: #fffa;
+                    aspect-ratio: 1 / 1;
+                    width: 1rem;
+                    height: auto;
+                    border-radius: 100vh;
+                    margin: .5rem;
+                    margin-left: calc(.5rem + var(--pad) * .75); 
+                    
+                    &:first-child {
+                        margin-left: calc(.5rem + var(--pad));
+                    }
+
+                    &:nth-child(5) {
+                        margin-right: var(--pad);
+                    }
+
+                    &:last-child {
+                        background: #fff9;
+                        margin-left: calc(.5rem + var(--pad) * 1.5); 
+                    }
+                }
+            }
+
+            & .number {
+                cursor: initial;
+                z-index: 1;
+            }
+            
+            & #draw__container {
+                display: flex;
+                align-items: center;
+                background-color: var(--bg-secondary);
+                width: calc((2rem * 5) + (var(--pad) * .75 * 4) + (var(--pad) * 2));
+                height: 4rem;
+                padding: 0 var(--pad);
+                gap: calc(var(--pad) * .75);
+                border-radius: 100vh;
+            }
+
+            & #luckyNumber {
+                width: 2rem;
+            }
+        }
+
+        & > #validateDrawBtn {
+            --size: 4rem;
+            --bg: var(--agree-color);
+            
+            cursor: pointer;
+            height: var(--size);
+            width: var(--size);
+            border-radius: 100vh;
+            margin-bottom: auto;
+            font-size: 1.25rem;
+            color: #fff;
+            fill: #fff;
+            background: var(--bg);
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            gap: calc(var(--pad) * .5);
+            padding: 0 var(--pad);
+            overflow: hidden;
+            transition: width 150ms ease-in-out;
+
+            & > svg {
+                height: 2rem;
+                flex-shrink: 0;
+            }
+
+            & > span {
+                opacity: 0;
+                transition: opacity 150ms ease-in-out;
+            }
+
+            &:hover {
+                width: 10rem;
+
+                & > span {
+                    opacity: 1;
+                }
+            }
+
+            &.disabled {
+                --bg: var(--agree-color-disabled);
+
+                cursor: not-allowed;
+            }
+        }
+
         & > .modal {
             --pad: .5rem;
 
+            align-self: stretch;
             background: #fff;
             border-radius: 2rem 2rem 0 0;
             overflow: hidden;
             padding: var(--pad);
             padding-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: calc(var(--pad) * 2);
 
 
             & #grid,
@@ -63,7 +182,6 @@ main {
                 align-items: stretch;
                 gap: calc(var(--pad) * 2) 0;
                 padding: var(--pad);
-                margin-bottom: var(--pad);
 
                 & .row {
                     display: flex;
@@ -73,12 +191,9 @@ main {
             }
 
             & #grid {
+                margin-bottom: var(--pad);
 
                 & .row {
-
-                    & .number {
-                        --fg: var(--bg-secondary);
-                    }
 
                     &:last-child {
                         padding-right: calc(100% - 2rem*11);
@@ -86,12 +201,43 @@ main {
                 }
             }
 
-            & #luckyGrid {
+            & > .options {
+                margin-top: .5rem;
 
-                & .row {
+                & .randomDraw {
+                    display: flex;
+                    align-items: stretch;
+                    justify-content: space-between;
+                    background: var(--num-bg);
+                    height: 3rem;
+                    flex: 1;
+                    border-radius: 100vh;
+                    box-shadow: 0 0 1rem -.375rem #ccc;
+                    overflow: hidden;
+                    
+                    & > input {
+                        flex-grow: 1;
+                        width: 100%;
+                        background: inherit;
+                        padding-left: calc(var(--pad) * 2);
+                        font-size: 1rem;
+                        -moz-appearance: textfield;
 
-                    & .number {
-                        --fg: var(--primary-color);
+
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+                    }
+
+                    & > button {
+                        aspect-ratio: 3 / 2;
+                        cursor: pointer;
+                        border-radius: 100vh;
+                        background: var(--secondary-color);
+                        color: #fff;
+                        font-size: 1rem;
                     }
                 }
             }
@@ -125,17 +271,19 @@ main {
     }
 }
 
+
 .number {
-    --fg: #555;
+    --fg: var(--bg-secondary);
     --bg: #eee;
+    --size: 2rem;
 
     display: grid;
     place-items: center;
     border-radius: 100vh;
     aspect-ratio: 1 / 1;
-    width: 2rem;
+    width: var(--size);
     height: auto;
-    background: #f0f0f0;
+    background: var(--num-bg);
     box-shadow: 0 0 1rem -.375rem #ccc;
     color: var(--fg);
     font-size: .875rem;
@@ -147,5 +295,9 @@ main {
     &.selected {
         background: var(--fg);
         color: var(--bg);
+    }
+
+    &.lucky {
+        --fg: var(--primary-color);
     }
 }
