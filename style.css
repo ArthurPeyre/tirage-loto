@@ -1,270 +1,232 @@
 :root {
-    --bg-primary: #210046;
-    --bg-secondary: #2f0066;
-    --bg-tertiary: #5900be;
+    --bg-primary: #f5f5fa;
+    --bg-secondary: #fff;
 
-    --primary-color: #ff0059;
-    --secondary-color: #0077ff;
-    --agree-color: hsl(120, 100%, 40%);
-    --agree-color-disabled: hsl(120, 100%, 25%);
-
-    --num-bg: #f0f0f0;
+    --color-primary: rgb(0, 140, 255);
 }
 
 *,
 *::before,
 *::after {
-    position: relative;
     box-sizing: border-box;
-    padding: 0;
+    position: relative;
     margin: 0;
+    padding: 0;
     border: none;
     outline: none;
 }
 
 html,
 body {
-    --pad: 1rem;
-
-    user-select: none;
     background: var(--bg-primary);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    width: 100vw;
-    height: 100dvh;
 }
 
 main {
-    height: 100%;
-    width: 100%;
+    --pad: 1rem;
+
     display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-
-
-    & > #grid__container {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: center;
+    flex-direction: column;
+    gap: var(--pad);
+    min-height: 100dvh;
+    max-width: 450px;
+    margin: 0 auto;
+    padding-bottom: var(--pad);
+    
+    
+    & .number {
+        --fg: #000;
+        --bg: var(--bg-primary);
+        
+        cursor: pointer;
+        aspect-ratio: 1 / 1;
+        width: 100%;
+        height: auto;
+        display: grid;
+        place-items: center;
+        border-radius: 100vh;
+        font-weight: 500;
+        color: var(--fg);
+        background: var(--bg);
+        /* box-shadow: 0 0 1.5rem -.5rem #aaad; */
+        
+        &.selected {
+            color: var(--bg);
+            background: var(--fg);
+        }
+    }
+    
+    & > #grid {
+        display: grid;
+        padding: var(--pad);
+        margin-top: auto;
+        background: var(--bg-secondary);
+        border-radius: calc(var(--pad) * 2);
         gap: var(--pad);
-        width: min(425px, 100%);
-        margin: 0 auto;
+        box-shadow: 0 0 1.5rem -.5rem #aaa3;
 
 
-        & > .draw {
+        &::before {
+            content: '';
+            position: absolute;
+            width: 35px;
+            height: .25rem;
+            background: #ddd;
+            border-radius: 100vh;
+            top: calc(var(--pad) * .5 - .125rem);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        & > :first-child {
             display: flex;
             align-items: center;
-            justify-content: center;
-            align-self: stretch;
-            gap: var(--pad);
-            margin-top: auto;
 
 
-            & .preset {
-                position: absolute;
-                content: '';
+            & > h1 {
+                font-size: 1.25rem;
+                font-weight: 500;
+                margin-left: .25rem;
+            }
+
+            & > #randomBtn {
+                cursor: pointer;
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                width: 100%;
-                height: 100%;
+                gap: calc(var(--pad) * .325);
+                margin-left: auto;
+                width: fit-content;
+                height: 2.25rem;
+                padding: 0 var(--pad);
+                padding-left: .625rem;
+                border-radius: 100vh;
+                background: var(--bg-secondary);
+                font-family: inherit;
+                /* font-weight: 500; */
+                color: #aaa;
+                fill: var(--color-primary);
 
-                & > * {
-                    background: #fffa;
-                    aspect-ratio: 1 / 1;
-                    width: 1rem;
-                    height: auto;
-                    border-radius: 100vh;
-                    margin: .5rem;
-                    margin-left: calc(.5rem + var(--pad) * .75); 
-                    
-                    &:first-child {
-                        margin-left: calc(.5rem + var(--pad));
-                    }
+                & svg {
+                    height: 50%;
+                    animation: none;
+                }
 
-                    &:nth-child(5) {
-                        margin-right: var(--pad);
-                    }
+                &:hover {
+                    color: #999;
+                    background: var(--bg-primary);
 
-                    &:last-child {
-                        background: #fff9;
-                        margin-left: calc(.5rem + var(--pad) * 1.5); 
+
+                    & svg {
+                        animation: rotateSVG 1s linear infinite;
                     }
                 }
             }
+        }
+
+        & > *:not(:first-child) {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            align-items: center;
+            justify-items: center;
+            gap: calc(var(--pad) * .75) calc(var(--pad) * .5);
+        }
+
+        & .number {
+            font-size: .875rem;
+        }
+    
+        & > #numbers {
+    
+            & .number {
+                --fg: var(--color-primary);
+            }
+        }
+
+        & > #luckyNumber {
+            margin-top: calc(var(--pad) * .5);
 
             & .number {
-                cursor: initial;
-                z-index: 1;
+                --fg: red;
+                --bg: #faf5f5;
             }
-            
-            & #draw__container {
-                display: flex;
-                align-items: center;
-                background-color: var(--bg-secondary);
-                width: calc((2rem * 5) + (var(--pad) * .75 * 4) + (var(--pad) * 2));
-                height: 4rem;
-                padding: 0 var(--pad);
-                gap: calc(var(--pad) * .75);
-                border-radius: 100vh;
+        }
+    }
+
+    & > #submitBtn__container {
+        display: flex;
+        align-items: center;
+        gap: var(--pad);
+        overflow: hidden;
+
+
+        &.validated {
+            & > #submitBtn {
+                width: 100%;
+
+                & > svg {
+                    display: none;
+                }
+
+                & > :last-child {
+                    display: flex;
+                }
             }
 
-            & #luckyNumber {
-                width: 2rem;
+            & > p {
+                width: 0;
             }
         }
 
-        & > #validateDrawBtn {
-            --size: 4rem;
-            --bg: var(--agree-color);
-            
-            cursor: pointer;
-            height: var(--size);
-            width: var(--size);
-            border-radius: 100vh;
-            margin-bottom: auto;
-            font-size: 1.25rem;
-            color: #fff;
-            fill: #fff;
-            background: var(--bg);
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            gap: calc(var(--pad) * .5);
-            padding: 0 var(--pad);
-            overflow: hidden;
-            transition: width 150ms ease-in-out;
+        & > p {
+            width: 100%;
+            transition: all 250ms ease-in-out;
+            white-space: nowrap;
+            color: #777;
+            opacity: 1;
+        }
+        
+        & > #submitBtn {
+            --size: 3.5rem;
+            --svgSize: 1.5rem;
+            --bg: #000;
 
-            & > svg {
-                height: 2rem;
+            flex-shrink: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            padding: calc((var(--size) - var(--svgSize)) * .5);
+            gap: calc((var(--size) - var(--svgSize)) * .5);
+            width: var(--size);
+            /* width: fit-content; */
+            height: var(--size);
+            border-radius: 100vh;
+            background: var(--bg);
+            color: #fff;
+            font-size: 1rem;
+            overflow: hidden;
+            transition: all 250ms ease-in-out;
+    
+    
+            & * {
                 flex-shrink: 0;
             }
-
-            & > span {
-                opacity: 0;
-                transition: opacity 150ms ease-in-out;
+        
+            & svg {
+                display: unset;
+                height: 1.5rem;
+                fill: #fff;
             }
+    
+            & > div {
+                display: none;
+                align-items: center;
+                gap: calc((var(--size) - var(--svgSize)) * .5);
+                margin: 0 auto;
 
-            &:hover {
-                width: 10rem;
 
                 & > span {
-                    opacity: 1;
-                }
-            }
-
-            &.disabled {
-                --bg: var(--agree-color-disabled);
-
-                cursor: not-allowed;
-            }
-        }
-
-        & > .modal {
-            --pad: .5rem;
-
-            align-self: stretch;
-            background: #fff;
-            border-radius: 2rem 2rem 0 0;
-            overflow: hidden;
-            padding: var(--pad);
-            padding-bottom: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: calc(var(--pad) * 2);
-
-
-            & #grid,
-            & #luckyGrid {
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-                gap: calc(var(--pad) * 2) 0;
-                padding: var(--pad);
-
-                & .row {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-            }
-
-            & #grid {
-                margin-bottom: var(--pad);
-
-                & .row {
-
-                    &:last-child {
-                        padding-right: calc(100% - 2rem*11);
-                    }
-                }
-            }
-
-            & > .options {
-                margin-top: .5rem;
-
-                & .randomDraw {
-                    display: flex;
-                    align-items: stretch;
-                    justify-content: space-between;
-                    background: var(--num-bg);
-                    height: 3rem;
-                    flex: 1;
-                    border-radius: 100vh;
-                    box-shadow: 0 0 1rem -.375rem #ccc;
-                    overflow: hidden;
-                    
-                    & > input {
-                        flex-grow: 1;
-                        width: 100%;
-                        background: inherit;
-                        padding-left: calc(var(--pad) * 2);
-                        font-size: 1rem;
-                        -moz-appearance: textfield;
-
-
-                        &::-webkit-outer-spin-button,
-                        &::-webkit-inner-spin-button {
-                            -webkit-appearance: none;
-                            margin: 0;
-                        }
-                    }
-
-                    & > button {
-                        aspect-ratio: 3 / 2;
-                        cursor: pointer;
-                        border-radius: 100vh;
-                        background: var(--secondary-color);
-                        color: #fff;
-                        font-size: 1rem;
-                    }
-                }
-            }
-
-            & > .appBar {
-                --pad: .75rem;
-                --size: 5rem;
-
-                display: flex;
-                align-items: stretch;
-                justify-content: space-between;
-                padding: var(--pad);
-                margin-top: var(--pad);
-                background: var(--bg-primary);
-                height: var(--size);
-                border-radius: calc(var(--size) * .5) calc(var(--size) * .5) 0 0;
-                box-shadow: 0 0 1.25rem -.25rem var(--bg-primary);
-
-
-                & button[type="submit"] {
-                    flex-grow: 1;
-                    border-radius: 100vh;
-                    font-size: 1rem;
-                    background: var(--primary-color);
-                    color: #fff;
-                    font-weight: 600;
-                    cursor: pointer;
+                    text-wrap: nowrap;
                 }
             }
         }
@@ -272,32 +234,12 @@ main {
 }
 
 
-.number {
-    --fg: var(--bg-secondary);
-    --bg: #eee;
-    --size: 2rem;
-
-    display: grid;
-    place-items: center;
-    border-radius: 100vh;
-    aspect-ratio: 1 / 1;
-    width: var(--size);
-    height: auto;
-    background: var(--num-bg);
-    box-shadow: 0 0 1rem -.375rem #ccc;
-    color: var(--fg);
-    font-size: .875rem;
-
-    &:is(button) {
-        cursor: pointer;
+@keyframes rotateSVG {
+    0% {
+        transform: rotate(0deg);
     }
 
-    &.selected {
-        background: var(--fg);
-        color: var(--bg);
-    }
-
-    &.lucky {
-        --fg: var(--primary-color);
+    100% {
+        transform: rotate(360deg);
     }
 }
