@@ -31,9 +31,18 @@ main {
     min-height: 100dvh;
     max-width: 450px;
     margin: 0 auto;
-    padding-bottom: var(--pad);
+    padding: var(--pad);
     
     
+    & > #score {
+        text-align: center;
+        margin: auto;
+
+        & > p {
+            font-size: 4rem;
+        }
+    }
+
     & .number {
         --fg: #000;
         --bg: var(--bg-primary);

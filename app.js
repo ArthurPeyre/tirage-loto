@@ -75,6 +75,7 @@ const refreshSubmitBtn = () => {
 const refreshUI = () => {
     refreshGrid();
     refreshSubmitBtn();
+    // document.querySelector('body').style.boxShadow = "none";
 }
 
 
@@ -117,6 +118,8 @@ const loto = () => {
     
     if (valideNumbers.length >= 3) {
         console.log(`Tirage: ${draw.numbers}\nNuméros communs: ${valideNumbers.length}`);
+        document.querySelector('body').style.boxShadow = "inset 0 0 0 .25rem lightGreen";
+
         if (luckyValid) {
             gain.innerHTML = gains[3];
         }
@@ -133,6 +136,8 @@ const loto = () => {
         }
     } else {
         gain.innerHTML = 0;
+
+        document.querySelector('body').style.boxShadow = "inset 0 0 0 .25rem red";
     }
 }
 
@@ -147,6 +152,15 @@ window.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('click', () => {
         if (!currentDraw.isValide()) return;
         loto();
+        // ===== TEST =====
+        // let i = 1;
+        // while (gain.innerHTML <= 10) {
+        //     loto();
+        //     i++;
+        // }
+        // console.log(i);
+        currentDraw = new Draw();
+        refreshUI()
     });
     gain = document.getElementById('gain');
 
